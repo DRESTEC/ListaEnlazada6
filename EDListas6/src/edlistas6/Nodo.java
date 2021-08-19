@@ -11,4 +11,31 @@ package edlistas6;
  */
 public class Nodo {
     
+    private Nodo siguiente;
+    private Estudiante valor;
+    
+    public Nodo(String nombre, int edad){
+        Estudiante nuevo = new Estudiante(nombre, edad);
+        setValor(nuevo);
+    }
+
+    public Nodo getSiguiente() {
+        return siguiente;
+    }
+
+    public void setSiguiente(Nodo siguiente) {
+        this.siguiente = siguiente;
+    }
+
+    public Estudiante getValor() {
+        return valor;
+    }
+
+    private void setValor(Estudiante valor) {
+        this.valor = valor;
+    }
+    
+    public String mostrarInformacion(){
+        return "Estudiante: "+ valor.getNombre()+"\nEdad: "+valor.getEdad();
+    }
 }
