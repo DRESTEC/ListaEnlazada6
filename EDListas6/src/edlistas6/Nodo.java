@@ -36,6 +36,6 @@ public class Nodo {
     }
     
     public String mostrarInformacion(){
-        return "Estudiante: "+ valor.getNombre()+"\nEdad: "+valor.getEdad();
+        return "Estudiante: "+ valor.getNombre()+"  Edad: "+valor.getEdad();
     }
 }
