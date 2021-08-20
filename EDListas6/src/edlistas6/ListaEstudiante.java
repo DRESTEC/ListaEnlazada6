@@ -16,14 +16,14 @@ public class ListaEstudiante {
     private Nodo ultimo;
     private int cantidad;
     
-    public boolean isEmpty(){ //metodo adicional para control de excepciones
+    private boolean isEmpty(){ //metodo adicional para control de excepciones
         return primero == null;
     }
     
     public int calcularPromedioEdad(){
 
         if (isEmpty()){
-            return 3312;
+            return 0;
         }else{
             Nodo nuevo = primero;
             int promedio = 0;
@@ -38,7 +38,7 @@ public class ListaEstudiante {
     
     public void calcularEdadMayor(){
         if(isEmpty()){
-              
+              System.out.println("0");
         }else{
             Nodo mayor=primero;
             Nodo nuevo=primero;
@@ -56,7 +56,7 @@ public class ListaEstudiante {
     
     public void calcularEdadMenor(){
         if(isEmpty()){
-              
+            System.out.println("0");  
         }else{
             Nodo menor=primero;
             Nodo nuevo=primero;
@@ -107,10 +107,17 @@ public class ListaEstudiante {
     public int Menu(){
         
         Scanner leer= new Scanner(System.in);
-        System.out.println("Opcion 1 Agregar "
-                + "Opcion 2 Calcular promedio Edad"
-                + "Opcion 3 Calcular Edad mayor"
-                + "Opcion 4 Calcular Edad menor");
+        System.out.println("""
+                           Digite 1: Agregar
+                           Digite 2: Buscar por indice
+                           Digite 3: Eliminar por incice
+                           Digite 4: Obtener primero
+                           Digite 5: Obtener ultimo
+                           Digite 6: Vaciar lista
+                           Digite 7: Eliminar ultimo
+                           Digite 8: Imprimir solo lista
+                           Digite 9: Otros calculos
+                           Digite 0: Finalizar""");
         int num=leer.nextInt();
         
         return num;
