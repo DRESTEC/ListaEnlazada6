@@ -10,7 +10,7 @@ import java.util.Scanner;
  *
  * @author Diego Vivas
  */
-public class ListaEstudiante {
+public class ListaEstudiante implements IListaEnlazadaTDA {
     
     private Nodo primero;
     private Nodo ultimo;
@@ -43,11 +43,11 @@ public class ListaEstudiante {
             Nodo mayor=primero;
             Nodo nuevo=primero;
             int indice =1;
-            for (int i=1 ; i<cantidad ; i++){
+            for (int i=1 ; i<=cantidad ; i++){
                 nuevo=nuevo.getSiguiente();
                     if(mayor.getValor().getEdad()<nuevo.getValor().getEdad()){
                         mayor=nuevo; 
-                        indice=i;
+                        indice=i+1;
             }
         }
         System.out.println("El mayor es: "+mayor.mostrarInformacion()+"\nIndice: "+indice);
@@ -61,11 +61,11 @@ public class ListaEstudiante {
             Nodo menor=primero;
             Nodo nuevo=primero;
             int indice = 1;
-            for (int i=0 ; i<cantidad-1 ; i++){
+            for (int i=1 ; i<=cantidad ; i++){
                 nuevo=nuevo.getSiguiente();
                     if(menor.getValor().getEdad()>nuevo.getValor().getEdad()){
                         menor=nuevo; 
-                        indice = i;
+                        indice = i+1;
             }
         }
         System.out.println("El menor es: "+menor.mostrarInformacion()+"\nIndice: "+indice);
@@ -77,26 +77,33 @@ public class ListaEstudiante {
         if(isEmpty()){
             primero=n;
             ultimo=primero;
+            cantidad++;
         }else{ 
-            Nodo current = primero; 
+            Nodo nuevo = primero; 
             Nodo anterior = primero;
          
             String nuevoIngreso = String.valueOf(n.getValor().getNombre().trim().toLowerCase().charAt(0));
-            String elementoX = String.valueOf(current.getValor().getNombre().trim().toLowerCase().charAt(0));
+            String x = String.valueOf(nuevo.getValor().getNombre().trim().toLowerCase().charAt(0));
+            
+            if(nuevoIngreso.compareTo(x)<=0){ 
+            n.setSiguiente(nuevo);
+            primero=n;   
         
-            if(nuevoIngreso.compareTo(String.valueOf(ultimo.getValor().getNombre().trim().toLowerCase().charAt(0)))>=0){  
+            }else if(nuevoIngreso.compareTo(String.valueOf(ultimo.getValor().getNombre().trim().toLowerCase().charAt(0)))>=0){  
                 ultimo.setSiguiente(n); 
                 ultimo=n ;   
+                cantidad++;
             }else { 
                 for(int i=0 ; i<cantidad-1 ; i++){   
-                    //current=current; 
+                    nuevo=nuevo.getSiguiente(); 
                     if(i!=0){ 
                         anterior= anterior.getSiguiente();
                     } 
-                    elementoX = String.valueOf(current.getValor().getNombre().trim().toLowerCase().charAt(0)); 
-                    if(nuevoIngreso.compareTo(elementoX)<=0){   
+                    x = String.valueOf(nuevo.getValor().getNombre().trim().toLowerCase().charAt(0)); 
+                    if(nuevoIngreso.compareTo(x)<=0){   
                         anterior.setSiguiente(n);
-                        n.setSiguiente(current);    
+                        n.setSiguiente(nuevo);    
+                        cantidad++;
                         break; 
                     } 
                 }
@@ -108,6 +115,7 @@ public class ListaEstudiante {
         
         Scanner leer= new Scanner(System.in);
         System.out.println("""
+                           
                            Digite 1: Agregar
                            Digite 2: Buscar por indice
                            Digite 3: Eliminar por incice
@@ -124,7 +132,15 @@ public class ListaEstudiante {
     }
     
     public void imprimir(){
-        System.out.println(primero.mostrarInformacion());
+        if(isEmpty()){
+            System.out.println("lista vacia");
+        }else{ 
+            Nodo n = primero;
+            for(int i = 0 ; i <= cantidad ; i++){
+                System.out.println(n.mostrarInformacion()); 
+                n = n.getSiguiente(); 
+            }
+        }
     }
     
     public Nodo buscarPorIndice(int indice){
@@ -136,14 +152,25 @@ public class ListaEstudiante {
     }
     
     public void eliminarPorIndice(int indice){
-        Nodo n = primero;
-        int i=0;
-        for( i=0 ; i==indice-1 ; i++){
-            n = n.getSiguiente();
+        Nodo nuevo = primero;
+        Nodo anterior = primero;
+        if(isEmpty()){
+            primero=primero.getSiguiente(); 
+        }else if(indice==cantidad-1){
+            for(int i=0 ; i<cantidad-1 ; i++){
+                nuevo=nuevo.getSiguiente();
+            }
+            ultimo=nuevo; 
+        }else{
+            for(int i=0 ; i<indice ; i++){
+                nuevo=nuevo.getSiguiente();
+                if(i!=0){
+                    anterior=anterior.getSiguiente();
+                }
+            } 
+            anterior.setSiguiente(nuevo.getSiguiente()); 
         }
-        if(i==indice){
-            n = null;
-        }
+        cantidad--;
     }
     
     public Nodo obtenerPrimero(){
